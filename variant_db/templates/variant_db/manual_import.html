@@ -2,9 +2,21 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
     <a class="navbar-brand">Manual import</a>
   </nav>
+  <br>
+
+  <!-- Success message after import -->
+  {% if message %}
+    {% for m in message %}
+      <div class="alert alert-success">
+        <strong>Success!</strong> {{ m }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  
+  <!-- Import form -->
   {% crispy import_form %}
 
 {% endblock %}

@@ -15,7 +15,7 @@ def view(request):
 
 def manual_import(request):
     import_form = ManualUploadForm()
-    context = {'import_form': import_form,}
+    context = {'import_form': import_form, 'message': None}
 
     if request.method == 'POST':
 
@@ -81,5 +81,7 @@ def manual_import(request):
                         classification_id = classification,
                         code_id = acmgCodes.objects.get(code_id=code)
                     )
+
+            context['message'] = ['Variant was uploaded successfully']
 
     return render(request, 'variant_db/manual_import.html', context)
