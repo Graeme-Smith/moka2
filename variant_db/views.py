@@ -45,7 +45,7 @@ def manual_import(request):
             # get patient
             patient, created = Patient.objects.get_or_create(
                 first_name = cleaned_data['first_name'],
-                surname = cleaned_data['surname'],
+                last_name = cleaned_data['last_name'],
                 proband = True,
                 family_id = family
             )
