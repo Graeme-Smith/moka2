@@ -4,7 +4,6 @@ from .models import *
 import datetime
 
 
-# Create your views here.
 def home(request):
     total_classifications = Classification.objects.all()
 
