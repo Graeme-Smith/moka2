@@ -1,6 +1,43 @@
 {% extends 'variant_db/base.html' %}
 {% block content %}
 
-  <p>Home</p>
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand">Homepage</a>
+  </nav>
+  <br>
+
+  <div class="card bg-light">
+    <div class="card-body">
+      <h3 class="card-title">Variant summary</h3>
+      <br>
+      <table class="table">
+        <tr>
+          <td>Total</td>
+          <td>{{ counts.num_total }}</td>
+        </tr>
+        <tr>
+          <td>Pathogenic</td>
+          <td>{{ counts.num_p }}</td>
+        </tr>
+        <tr>
+          <td>Likely pathogenic</td>
+          <td>{{ counts.num_lp }}</td>
+        </tr>
+        <tr>
+          <td>VUS</td>
+          <td>{{ counts.num_vus }}</td>
+        </tr>
+        <tr>
+          <td>Likely benign</td>
+          <td>{{ counts.num_lb }}</td>
+        </tr>
+        <tr>
+          <td>Benign</td>
+          <td>{{ counts.num_b }}</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
 
 {% endblock %}

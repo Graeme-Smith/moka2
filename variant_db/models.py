@@ -1,9 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
-
-
 class Patient(models.Model):
     """
     Model to store patient details
@@ -22,6 +19,17 @@ class Family(models.Model):
     Model to store family details
     """
     family_id = models.AutoField(primary_key=True)
+
+
+class Phenotype(models.Model):
+    """
+    Model to store the patient symptoms at a particular clinic visit
+    """
+    visit_id = models.AutoField(primary_key=True)
+    visit_date = models.DateField()
+    patient_id = models.ForeignKey('Patient', on_delete=models.CASCADE)
+    description = models.TextField()
+    stage = models.CharField(max_length=3, choices=(('1', 'I'), ('2', 'II'), ('3', 'III'), ('4', 'IV')))
 
 
 class dnaSample(models.Model):
@@ -100,6 +108,5 @@ class acmgCodes(models.Model):
     """
     Model to store patient details
     """
-    code_id = models.CharField(max_length=4,
-                               primary_key=True)
+    code_id = models.CharField(max_length=4, primary_key=True)
     description = models.TextField()
