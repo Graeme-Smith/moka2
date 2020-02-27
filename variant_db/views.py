@@ -14,13 +14,18 @@ def view(request):
 
 
 def manual_import(request):
+    """
+    Takes the input from the manual input form and imports it into the database
+    """
+    # setup view
     import_form = ManualUploadForm()
     context = {'import_form': import_form, 'message': None}
 
+    # if form is submitted
     if request.method == 'POST':
-
         import_form = ManualUploadForm(request.POST)
         if import_form.is_valid:
+
             print(import_form)
             cleaned_data = import_form.cleaned_data
 
@@ -44,7 +49,7 @@ def manual_import(request):
                 sample_type = 'germline'
             )
 
-            # get test
+            # make new test
             test = Test.objects.create(
                 sample_id = sample,
                 test_type = cleaned_data['test_type'],
@@ -62,7 +67,7 @@ def manual_import(request):
                 coords_genomic = cleaned_data['variant_genomic']
             )
 
-            # get classification
+            # make new classification
             classification = Classification.objects.create(
                 variant_id = variant,
                 classification = cleaned_data['variant_classification']
@@ -82,6 +87,8 @@ def manual_import(request):
                         code_id = acmgCodes.objects.get(code_id=code)
                     )
 
+            # add success message to page
             context['message'] = ['Variant was uploaded successfully']
 
+    # render the page
     return render(request, 'variant_db/manual_import.html', context)
