@@ -12,7 +12,7 @@ class ManualUploadForm(forms.Form):
     Form for manually inputting data
     """
     first_name = forms.CharField()
-    surname = forms.CharField()
+    last_name = forms.CharField()
     description = forms.CharField()
     stage = forms.ChoiceField(choices=(('1' 'I'), ('2', 'II'), ('3', 'III'), ('4', 'IV')))
     test_type = forms.ChoiceField(choices=(
@@ -80,7 +80,7 @@ class ManualUploadForm(forms.Form):
         self.helper.layout = Layout(
             HTML('<br><h5>Patient information</h5>'),
             Field('first_name', placeholder="Enter patient's first name"),
-            Field('surname', placeholder="Enter patient's surname"),
+            Field('last_name', placeholder="Enter patient's last name"),
             HTML('<br><h5>Patient phenotype</h5>'),
             Field('description', placeholder="Enter a description of the patient's symptoms"),
             Field('stage'),
