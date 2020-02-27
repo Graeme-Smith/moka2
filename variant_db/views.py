@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import ManualUploadForm
 
 # Create your views here.
 def home(request):
@@ -10,4 +11,7 @@ def view(request):
 
 
 def manual_import(request):
-    return render(request, 'variant_db/manual_import.html', {})
+    import_form = ManualUploadForm()
+
+    context = {'import_form': import_form,}
+    return render(request, 'variant_db/manual_import.html', context)
