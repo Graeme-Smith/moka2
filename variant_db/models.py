@@ -10,6 +10,8 @@ class Patient(models.Model):
     """
     patient_id = models.AutoField(primary_key=True)
     family_id = models.ForeignKey('Family', on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50)
+    surname = models.CharField(max_length=50)
     proband = models.BooleanField()
 
 
