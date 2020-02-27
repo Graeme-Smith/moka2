@@ -6,7 +6,18 @@ import datetime
 
 # Create your views here.
 def home(request):
-    return render(request, 'variant_db/home.html', {})
+    total_classifications = Classification.objects.all()
+
+    num_classification = {
+        'num_total': len(total_classifications),
+        'num_b': len(total_classifications.filter(classification='1')),
+        'num_lb': len(total_classifications.filter(classification='2')),
+        'num_vus': len(total_classifications.filter(classification='3')),
+        'num_lp': len(total_classifications.filter(classification='4')),
+        'num_p': len(total_classifications.filter(classification='5'))
+    }
+
+    return render(request, 'variant_db/home.html', {'counts': num_classification})
 
 
 def view(request):
