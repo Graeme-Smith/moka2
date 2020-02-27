@@ -1,7 +1,8 @@
 {% extends 'variant_db/base.html' %}
 {% block content %}
+{% load crispy_forms_tags %}
 
   <p>Manual import</p>
-  {{ import_form.as_p }}
+  {% crispy import_form %}
 
 {% endblock %}
