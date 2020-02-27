@@ -40,7 +40,13 @@ def manual_import(request):
                 family_id = family
             )
 
-            # TODO get sypmtoms
+            # make new phenotype entry
+            phenotype = Phenotype.objects.create(
+                visit_date = datetime.datetime.now(),
+                patient_id = patient,
+                description = cleaned_data['description'],
+                stage = cleaned_data['stage']
+            )
             
             # make new sample
             sample = dnaSample.objects.create(
@@ -58,7 +64,7 @@ def manual_import(request):
             )
 
             # get variants
-            gene = Gene.objects.get(gene_name = 'BRCA1')
+            gene = Gene.objects.get(gene_id = 'HGNC:1100') # TODO expand to more genes
             variant, created = Variant.objects.get_or_create(
                 test_id = test,
                 gene_id = gene,
