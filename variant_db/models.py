@@ -13,6 +13,8 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     proband = models.BooleanField()
+    first_name = models.CharField(max_length=25)
+    last_name = models.CharField(max_length=25)
 
 
 class Family(models.Model):
