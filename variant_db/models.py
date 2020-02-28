@@ -79,8 +79,8 @@ class Variant(models.Model):
         return self.coords_genomic
     
     def get_classification(self):
-        return Classification.objects.get(variant_id=self.variant_id)
-
+        classification = Classification.objects.get(variant_id=self.variant_id)
+        return str(classification)
 
 class Gene(models.Model):
     """
