@@ -20,7 +20,12 @@ def home(request):
 
 
 def view(request):
-    return render(request, 'variant_db/view.html', {})
+    """
+    View a list of variants
+    """
+    variant_list = Variant.objects.all()
+
+    return render(request, 'variant_db/view.html', {'variants': variant_list})
 
 
 def manual_import(request):

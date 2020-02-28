@@ -11,6 +11,12 @@ class Patient(models.Model):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def get_phenotype(self):
+        return Phenotype.objects.get(patient_id=self.patient_id)
+
 
 class Family(models.Model):
     """
@@ -28,6 +34,9 @@ class Phenotype(models.Model):
     patient_id = models.ForeignKey('Patient', on_delete=models.CASCADE)
     description = models.TextField()
     stage = models.CharField(max_length=3, choices=(('1', 'I'), ('2', 'II'), ('3', 'III'), ('4', 'IV')))
+
+    def __str__(self):
+        return self.description
 
 
 class dnaSample(models.Model):
@@ -66,6 +75,12 @@ class Variant(models.Model):
     coords_protein = models.CharField(max_length=50)
     coords_genomic = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.coords_genomic
+    
+    def get_classification(self):
+        classification = Classification.objects.get(variant_id=self.variant_id)
+        return str(classification)
 
 class Gene(models.Model):
     """
@@ -77,18 +92,32 @@ class Gene(models.Model):
     gene_name = models.CharField(max_length=20)
     # TODO - Add gene alias symbols
 
+    def __str__(self):
+        return self.gene_name
+
 
 class Classification(models.Model):
     """
     Model to store variant classification details
     """
+    CODES=(('1', 'Benign'),
+           ('2', 'Likely Benign'),
+           ('3', 'VUS'),
+           ('4', 'Likely Pathogenic'),
+           ('5', 'Pathogenic'))
     classification_id = models.AutoField(primary_key=True)
     variant_id = models.ForeignKey('Variant', on_delete=models.CASCADE)
-    classification = models.CharField(max_length=10, choices=(('1', 'Benign'),
-                                                              ('2', 'Likely Benign'),
-                                                              ('3', 'VUS'),
-                                                              ('4', 'Likely Pathogenic'),
-                                                              ('5', 'Pathogenic')))
+    classification = models.CharField(max_length=10, choices=CODES)
+
+    def __str__(self):
+        """
+        Get the classification and look up code number in codes list
+        """
+        classification = self.classification
+        for c_num, c_desc in self.CODES:
+            if classification == c_num:
+                classification = c_desc
+        return classification
 
 
 class Evidence(models.Model):
