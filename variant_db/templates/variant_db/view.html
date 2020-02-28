@@ -1,0 +1,96 @@
+{% extends 'variant_db/base.html' %}
+{% block content %}
+
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand">View variants</a>
+  </nav>
+  <br>
+
+  <table id="variants" class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>Variant</th>
+        <th>cDNA</th>
+        <th>Protein change</th>
+        <th>Gene</th>
+        <th>Patient</th> <!-- concatenate first and last name -->
+        <!--<th>Phenotype</th>-->
+        <th>Classification</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for var in variants %}
+      <tr>
+        <td>{{ var }}</td>
+        <td>{{ var.coords_cdna }}</td>
+        <td>{{ var.coords_protein }}</td>
+        <td>{{ var.gene_id }}</td>
+        <td>{{ var.test_id.sample_id.patient_id }}</td>
+        <!--<td>{{ var.test_id.sample_id.patient_id.get_phenotype }}</td>-->
+        <td>
+          {% if 'Benign' in var.get_classification %}
+          <a class="btn btn-info btn-sm">{{ var.get_classification }}</a>
+          {% elif 'VUS' in var.get_classification %}
+          <a class="btn btn-warning btn-sm">{{ var.get_classification }}</a>
+          {% elif 'Pathogenic' in var.get_classification %}
+          <a class="btn btn-danger btn-sm">{{ var.get_classification }}</a>
+          {% else %}
+          <a class="btn btn-light btn-sm">{{ var.get_classification }}</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+
+
+<!-- Initialise DataTables-->
+<script>
+    $(document).ready(function(){
+    
+     // Setup - add a text input to each footer cell
+        $('#variants tfoot th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
+        } );
+     
+        // DataTable
+          // Inititialise DataTable
+      var table = $('#variants').DataTable({
+        "paging":   true,
+        "ordering": true,
+        "info":     false,
+        "pageLength": 10,
+        "searching": true,
+        "aaSorting": [],
+      });
+     
+        // Apply the search
+        table.columns().every( function () {
+            var that = this;
+     
+            $( 'input', this.footer() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        } );
+    
+    
+    });
+    </script>
+
+
+{% endblock %}
