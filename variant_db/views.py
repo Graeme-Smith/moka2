@@ -45,7 +45,7 @@ def manual_import(request):
             # get patient
             patient, created = Patient.objects.get_or_create(
                 first_name = cleaned_data['first_name'],
-                surname = cleaned_data['surname'],
+                last_name = cleaned_data['last_name'],
                 proband = True,
                 family_id = family
             )
@@ -100,7 +100,7 @@ def manual_import(request):
                 if cleaned_data[code] == True:
                     Evidence.objects.create(
                         classification_id = classification,
-                        code_id = acmgCodes.objects.get(code_id=code)
+                        code_id = acmgCodes.objects.get(code_id=code.upper())
                     )
 
             # add success message to page
