@@ -3,6 +3,8 @@ from .forms import ManualUploadForm
 from django.views.generic import ListView
 from .models import *
 import datetime
+from django_tables2 import SingleTableView
+from .tables import PatientTable
 
 
 def home(request):
@@ -111,6 +113,13 @@ def manual_import(request):
     return render(request, 'variant_db/manual_import.html', context)
 
 
-class PatientListView(ListView):
+#class PatientListView(ListView):
+#    model = Patient
+#    template_name = 'variant_db/view.html'
+
+
+
+class PatientListView(SingleTableView):
     model = Patient
+    table_class = PatientTable
     template_name = 'variant_db/view.html'
