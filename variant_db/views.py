@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import ManualUploadForm
+from django.views.generic import ListView
 from .models import *
 import datetime
 
@@ -103,8 +104,13 @@ def manual_import(request):
                         code_id = acmgCodes.objects.get(code_id=code)
                     )
 
-            # add success message to page
+            # add success message to pagedjango_tables2.tables.table_factory
             context['message'] = ['Variant was uploaded successfully']
 
     # render the page
     return render(request, 'variant_db/manual_import.html', context)
+
+
+class PatientListView(ListView):
+    model = Patient
+    template_name = 'variant_db/view.html'

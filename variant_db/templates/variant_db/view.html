@@ -6,4 +6,16 @@
   </nav>
   <br>
 
+{% load render_table from django_tables2 %}
+<!doctype html>
+<html>
+    <head>
+        <title>List of patients</title>
+    </head>
+    <body>
+        {% render_table object_list %}
+    </body>
+</html>
+
 {% endblock %}
+
